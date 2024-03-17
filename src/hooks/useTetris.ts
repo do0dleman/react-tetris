@@ -1,19 +1,17 @@
-import { useReducer } from "react"
+import { useEffect } from "react";
+import useTetrisBoard from "./useTetrisBoard";
+import { GAME_TICK_DELAY } from "../utils/constants";
 
-export function useTetris() {
-    type BoardState = {
-        board: [],
-        droppingRow: 0,
-        droppingCol: 0,
-    }
-    function boardReducer(state: BoardState, action: string) {
-        return state
-    }
+export default function useTetris() {
+    const [boardState, dispatchBoard] = useTetrisBoard()
 
-    const [boardState, dispatchBoard] = useReducer(boardReducer, {
-        board: [],
-        droppingRow: 0,
-        droppingCol: 0,
-        droppingFig:
-    })
+    useEffect(() => {
+        const gameLoopId = setInterval(() => {
+            dispatchBoard("drop")
+        }, GAME_TICK_DELAY)
+
+        return () => clearInterval(gameLoopId)
+    }, [])
+
+    return boardState
 }
