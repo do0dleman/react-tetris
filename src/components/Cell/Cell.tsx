@@ -7,7 +7,7 @@ type CellProps = {
 
 function Cell({ ShapeType }: CellProps) {
     return (
-        <div className={`w-10 h-10 border ${ShapeType}`} />
+        <div className={`w-10 h-10 border-l border-t ${ShapeType}`} />
     )
 }
 export default Cell

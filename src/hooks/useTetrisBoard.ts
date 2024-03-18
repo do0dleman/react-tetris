@@ -16,7 +16,7 @@ export default function useTetrisBoard() {
 
     function boardReducer(state: BoardState, action: BoardActions) {
         const newState = { ...state }
-        if (newState.isGameOver) {
+        if (newState.isGameOver && action !== 'restart') {
             return newState
         }
         if (action === "toggleIsStart") {

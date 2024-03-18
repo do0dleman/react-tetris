@@ -1,8 +1,23 @@
 .I {
-    background-color: red;
+    background-color: #ec1b24;
+}
+.J {
+    background-color: #0d73c7;
+}
+.L {
+    background-color: #f6921e;
 }
 .O {
-    background-color: yellow;
+    background-color: #fff000;
+}
+.S {
+    background-color: #ec008b;
+}
+.T {
+    background-color: #00a9ed;
+}
+.Z {
+    background-color: #8bc53f;
 }
 .ghost {
     background-color: gray;

@@ -1,12 +1,11 @@
 import Cell from "./Cell/Cell"
 import useTetris from "../hooks/useTetris"
-import BoardState, { initialBoardState } from "../models/BoardState"
+import BoardState from "../models/BoardState"
 import { HIDDEN_ROW_COUNT } from "../utils/constants"
 import { FaPlay } from "react-icons/fa6"
 import { IoReloadCircle } from "react-icons/io5";
 import { ShapeType } from "../models/shapes"
 import setGhostShapeRow from "../utils/setGhostShapeRow"
-import { MouseEventHandler } from "react"
 
 function Tetris() {
     const [boardState, dispatchBoardAction] = useTetris()
@@ -29,20 +28,20 @@ function Tetris() {
             return (<>
                 {row.map((cell, j) => {
                     const shape = boardState.droppingShape
-
+                    const shapeWidth = shape.length
                     if (i - boardState.ghostPieceRow >= 0 &&
-                        i - boardState.ghostPieceRow < 4 &&
+                        i - boardState.ghostPieceRow < shapeWidth &&
                         j - boardState.droppingCol >= 0 &&
-                        j - boardState.droppingCol < 4
+                        j - boardState.droppingCol < shapeWidth
                     ) {
                         if (shape[i - boardState.ghostPieceRow][j - boardState.droppingCol] == true) {
                             cell = "ghost" as ShapeType
                         }
                     }
                     if (i - boardState.droppingRow >= 0 &&
-                        i - boardState.droppingRow < 4 &&
+                        i - boardState.droppingRow < shapeWidth &&
                         j - boardState.droppingCol >= 0 &&
-                        j - boardState.droppingCol < 4
+                        j - boardState.droppingCol < shapeWidth
                     ) {
                         if (shape[i - boardState.droppingRow][j - boardState.droppingCol] == true) {
                             cell = boardState.droppingShapeType
@@ -72,7 +71,7 @@ function Tetris() {
 
     return (
         <div className="flex justify-center">
-            <div className="grid grid-cols-10 border w-fit">
+            <div className="grid grid-cols-10 border-b border-r w-fit">
                 {drawGrid(boardState)}
             </div>
             <div className="w-fit flex flex-col gap-3 text-6xl">
