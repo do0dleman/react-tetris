@@ -23,6 +23,5 @@ export default function doesIntersectGridBorder(newState: BoardState) {
 
             return true
         })
-        return true
     })
 }

@@ -6,9 +6,10 @@ import hasShapeUnder from "../utils/hasShapeUnder"
 import setShapeOnBoard from "../utils/setShapeOnBoard"
 import generateRandomShape from "../utils/generateRandomShape"
 import doesIntersectGridBorder from "../utils/doesIntersectGridBorder"
+import rotate2dArrayRight from "../utils/rotate2dArrayRight"
 
 export default function useTetrisBoard() {
-    type BoardActions = "drop" | "moveLeft" | "moveRight"
+    type BoardActions = "drop" | "moveLeft" | "moveRight" | "roateRight"
 
     function boardReducer(state: BoardState, action: BoardActions) {
         const newState = { ...state }
@@ -17,7 +18,7 @@ export default function useTetrisBoard() {
                 if (hasShapeUnder(newState)) {
                     setShapeOnBoard(newState)
                     newState.droppingShapeType = generateRandomShape()
-                    newState.droppingShape = SHAPES[newState.droppingShapeType!]
+                    newState.droppingShape = JSON.parse(JSON.stringify(SHAPES[newState.droppingShapeType!]))
                     newState.droppingCol = 3
                     newState.droppingRow = 0
                 }
@@ -27,6 +28,13 @@ export default function useTetrisBoard() {
                 newState.droppingCol--
                 if (doesIntersectGridBorder(newState)) {
                     newState.droppingCol++
+                }
+                return newState
+            case "roateRight":
+                const prevShape = JSON.parse(JSON.stringify(newState.droppingShape))
+                rotate2dArrayRight(newState.droppingShape)
+                if (doesIntersectGridBorder(newState)) {
+                    newState.droppingShape = prevShape
                 }
                 return newState
             case "moveRight":
@@ -39,13 +47,15 @@ export default function useTetrisBoard() {
                 return newState
         }
     }
+    const rot = JSON.parse(JSON.stringify(SHAPES['I']))
+    rotate2dArrayRight(rot)
 
     const initialState = ({
         board: [[], []],
         droppingRow: 0,
         droppingCol: 3,
         droppingShapeType: 'I' as keyof typeof SHAPES,
-        droppingShape: SHAPES['I']
+        droppingShape: rot
     }) as BoardState
 
     function createInitialState() {

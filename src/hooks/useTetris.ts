@@ -13,6 +13,9 @@ export default function useTetris() {
             if (e.key === "ArrowRight") {
                 dispatchBoard("moveRight")
             }
+            if (e.key === "r") {
+                dispatchBoard("roateRight")
+            }
             console.log(e.key)
         })
         const gameLoopId = setInterval(() => {
