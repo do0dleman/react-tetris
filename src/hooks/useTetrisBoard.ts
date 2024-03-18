@@ -2,28 +2,51 @@ import { useReducer } from "react"
 import { SHAPES } from "../models/shapes"
 import generateGrid from "../utils/generateGrid"
 import BoardState from "../models/BoardState"
+import hasShapeUnder from "../utils/hasShapeUnder"
+import setShapeOnBoard from "../utils/setShapeOnBoard"
+import generateRandomShape from "../utils/generateRandomShape"
+import doesIntersectGridBorder from "../utils/doesIntersectGridBorder"
 
 export default function useTetrisBoard() {
-    type BoardActions = "drop"
+    type BoardActions = "drop" | "moveLeft" | "moveRight"
 
     function boardReducer(state: BoardState, action: BoardActions) {
+        const newState = { ...state }
         switch (action) {
             case "drop":
-                return {
-                    ...state,
-                    droppingCol: state.droppingCol + 1
+                if (hasShapeUnder(newState)) {
+                    setShapeOnBoard(newState)
+                    newState.droppingShapeType = generateRandomShape()
+                    newState.droppingShape = SHAPES[newState.droppingShapeType!]
+                    newState.droppingCol = 3
+                    newState.droppingRow = 0
                 }
+                newState.droppingRow++
+                return newState
+            case "moveLeft":
+                newState.droppingCol--
+                if (doesIntersectGridBorder(newState)) {
+                    newState.droppingCol++
+                }
+                return newState
+            case "moveRight":
+                newState.droppingCol++
+                if (doesIntersectGridBorder(newState)) {
+                    newState.droppingCol--
+                }
+                return newState
             default:
-                return state
+                return newState
         }
     }
 
-    const initialState = {
+    const initialState = ({
         board: [[], []],
-        droppingRow: 3,
-        droppingCol: 5,
-        droppingShape: 'I' as keyof typeof SHAPES,
-    }
+        droppingRow: 0,
+        droppingCol: 3,
+        droppingShapeType: 'I' as keyof typeof SHAPES,
+        droppingShape: SHAPES['I']
+    }) as BoardState
 
     function createInitialState() {
         return {

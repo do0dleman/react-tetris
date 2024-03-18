@@ -6,6 +6,15 @@ export default function useTetris() {
     const [boardState, dispatchBoard] = useTetrisBoard()
 
     useEffect(() => {
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowLeft") {
+                dispatchBoard("moveLeft")
+            }
+            if (e.key === "ArrowRight") {
+                dispatchBoard("moveRight")
+            }
+            console.log(e.key)
+        })
         const gameLoopId = setInterval(() => {
             dispatchBoard("drop")
         }, GAME_TICK_DELAY)

@@ -4,7 +4,8 @@ type BoardState = {
     board: ShapeType[][],
     droppingRow: number,
     droppingCol: number,
-    droppingShape: ShapeType
+    droppingShapeType: ShapeType
+    droppingShape: boolean[][]
 }
 
 export default BoardState

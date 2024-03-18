@@ -2,10 +2,40 @@ import { useEffect } from "react"
 import Cell from "./Cell/Cell"
 import useTetris from "../hooks/useTetris"
 import BoardState from "../models/BoardState"
-import { SHAPES } from "../models/shapes"
 
 function Tetris() {
     const boardState = useTetris()
+    // const boardState = {
+    //     droppingCol: 3,
+    //     droppingRow: 20,
+    //     droppingShape: "O",
+    //     board: [
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined],
+    //         [undefined, undefined, undefined, undefined, 'I', 'I', 'I', 'I', undefined, undefined],
+    //     ]
+    // }
 
     function drawGrid(boardState: BoardState) {
         const cells = boardState.board
@@ -18,14 +48,14 @@ function Tetris() {
             }
             return (<>
                 {row.map((cell, j) => {
-                    if (i - boardState.droppingCol >= 0 &&
-                        i - boardState.droppingCol < 4 &&
-                        j - boardState.droppingRow >= 0 &&
-                        j - boardState.droppingRow < 4
+                    if (i - boardState.droppingRow >= 0 &&
+                        i - boardState.droppingRow < 4 &&
+                        j - boardState.droppingCol >= 0 &&
+                        j - boardState.droppingCol < 4
                     ) {
-                        const shape = SHAPES[boardState.droppingShape!]
-                        if (shape[i - boardState.droppingCol][j - boardState.droppingRow] == true) {
-                            cell = boardState.droppingShape
+                        const shape = boardState.droppingShape
+                        if (shape[i - boardState.droppingRow][j - boardState.droppingCol] == true) {
+                            cell = boardState.droppingShapeType
                         }
                     }
                     return <Cell ShapeType={cell} key={`${i}${j}`} />
