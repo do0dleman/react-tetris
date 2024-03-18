@@ -41,7 +41,7 @@ export default function useTetris() {
         window.addEventListener("keydown", HadnleKeyDown)
         window.addEventListener("keyup", HadnleKeyUp)
         const tickTime = boardState.isSpeedUp ? 50 :
-            INITIAL_TICK_TIME - Math.floor(boardState.linesCleared / 5) * 10
+            Math.max(INITIAL_TICK_TIME - boardState.level * 10, 50)
 
         const gameLoopId = setTimeout(() => {
             if (boardState.isGameOver) {

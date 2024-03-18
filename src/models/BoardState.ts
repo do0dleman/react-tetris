@@ -10,12 +10,15 @@ type BoardState = {
     droppingCol: number,
     ghostPieceRow: number,
     droppingShapeType: ShapeType
+    nextDroppingShapeType: ShapeType
     droppingShape: boolean[][]
     isGameOver: boolean
     isStarted: boolean
     isSpeedUp: boolean
     score: number
     linesCleared: number
+    linesClearedBeforeLevel: number
+    level: number
     lastInputTime: Date
 }
 
@@ -25,12 +28,15 @@ const initialBoardState = ({
     droppingCol: 3,
     ghostPieceRow: 20,
     droppingShapeType: 'I' as keyof typeof SHAPES,
+    nextDroppingShapeType: 'I' as keyof typeof SHAPES,
     droppingShape: JSON.parse(JSON.stringify(SHAPES['I'])),
     isGameOver: false,
     isStarted: true,
     isSpeedUp: false,
     score: 0,
     linesCleared: 0,
+    linesClearedBeforeLevel: 0,
+    level: 5,
     lastInputTime: new Date(),
 }) as BoardState
 

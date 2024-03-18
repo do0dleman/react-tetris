@@ -34,7 +34,8 @@ export default function useTetrisBoard() {
                     ...initialBoardState,
                     board: generateGrid(),
                     droppingShapeType: newShapeType,
-                    droppingShape: JSON.parse(JSON.stringify(SHAPES[newShapeType!]))
+                    droppingShape: JSON.parse(JSON.stringify(SHAPES[newShapeType!])),
+                    nextDroppingShapeType: generateRandomShape()
 
                 }
             case "drop":
@@ -47,8 +48,9 @@ export default function useTetrisBoard() {
                     newState.isGameOver = isGameOver(newState)
                     newState.board = clearFullLines(newState)
                     if (!newState.isGameOver) {
-                        newState.droppingShapeType = generateRandomShape()
-                        newState.droppingShape = JSON.parse(JSON.stringify(SHAPES[newState.droppingShapeType!]))
+                        newState.droppingShapeType = state.nextDroppingShapeType
+                        newState.nextDroppingShapeType = generateRandomShape()
+                        newState.droppingShape = JSON.parse(JSON.stringify(SHAPES[state.nextDroppingShapeType!]))
                         newState.droppingCol = 3
                         newState.droppingRow = 2
                     }
@@ -61,8 +63,9 @@ export default function useTetrisBoard() {
                 newState.isGameOver = isGameOver(newState)
                 newState.board = clearFullLines(newState)
                 if (!newState.isGameOver) {
-                    newState.droppingShapeType = generateRandomShape()
-                    newState.droppingShape = JSON.parse(JSON.stringify(SHAPES[newState.droppingShapeType!]))
+                    newState.droppingShapeType = state.nextDroppingShapeType
+                    newState.nextDroppingShapeType = generateRandomShape()
+                    newState.droppingShape = JSON.parse(JSON.stringify(SHAPES[state.nextDroppingShapeType!]))
                     newState.droppingCol = 3
                     newState.droppingRow = 3
                 }
@@ -102,10 +105,14 @@ export default function useTetrisBoard() {
 
 
     function createInitialState() {
+        const initialShapeType = generateRandomShape()
         return {
             ...initialBoardState,
+            droppingShapeType: initialShapeType,
+            droppingShape: SHAPES[initialShapeType!],
+            nextDroppingShapeType: generateRandomShape(),
             board: generateGrid()
-        }
+        } as BoardState
     }
 
     const [boardState, dispatchBoard] = useReducer(boardReducer, initialBoardState, createInitialState)

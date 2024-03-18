@@ -3,12 +3,20 @@ import useTetris from "../hooks/useTetris"
 import BoardState from "../models/BoardState"
 import { HIDDEN_ROW_COUNT } from "../utils/constants"
 import { FaPlay } from "react-icons/fa6"
-import { IoReloadCircle } from "react-icons/io5";
+import { FaArrowRotateLeft } from "react-icons/fa6";
 import { ShapeType } from "../models/shapes"
 import setGhostShapeRow from "../utils/setGhostShapeRow"
+import { createRef } from "react"
+import NextPiece from "./NextPiece"
+import Score from "./Score"
+import Level from "./Level"
+import LinesCleared from "./LinesCleared"
+import Controls from "./Controls"
 
 function Tetris() {
     const [boardState, dispatchBoardAction] = useTetris()
+    const StartBtnRef = createRef<HTMLButtonElement>()
+    const RestartBtnRef = createRef<HTMLButtonElement>()
 
     // const boardState = {
     //     ...initialBoardState,
@@ -53,34 +61,40 @@ function Tetris() {
         })
     }
 
-    // useEffect(() => {
-
-    // }, [])
-
     function HandleStartButton(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        e.preventDefault();
-
-        (e.target as HTMLElement).blur()
-        dispatchBoardAction("toggleIsStart")
+        dispatchBoardAction("toggleIsStart");
+        StartBtnRef.current!.blur();
     }
     function HandleRestartButton(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-        e.preventDefault();
-        (e.target as HTMLElement).blur()
-        dispatchBoardAction("restart")
+
+        dispatchBoardAction("restart");
+        RestartBtnRef.current!.blur();
     }
 
     return (
-        <div className="flex justify-center">
-            <div className="grid grid-cols-10 border-b border-r w-fit">
-                {drawGrid(boardState)}
+        <div className="flex flex-col justify-center mt-10">
+            <div className="flex justify-center gap-2 md:gap-8">
+                <div>
+                    <div className="grid grid-cols-10 border w-fit h-auto">
+                        {drawGrid(boardState)}
+                    </div>
+                </div>
+                <div className="w-fit flex flex-col gap-3 h-[fit-content]">
+                    <Level level={boardState.level} />
+                    <LinesCleared linesCleared={boardState.linesCleared} />
+                    <Score score={boardState.score} />
+                    <NextPiece shapeType={boardState.nextDroppingShapeType} />
+                    <div className="flex flex-col gap-2 md:flex-row justify-center items-center text-5xl">
+                        <button ref={StartBtnRef} onClick={HandleStartButton}
+                            className="select-none"><FaPlay /></button>
+                        <button ref={RestartBtnRef} onClick={HandleRestartButton}
+                            className="select-none select:outline"><FaArrowRotateLeft /></button>
+                    </div>
+                </div>
             </div>
-            <div className="w-fit flex flex-col gap-3 text-6xl">
-                <button onClick={HandleStartButton}
-                    className="select-none"><FaPlay /></button>
-                <button onClick={HandleRestartButton}
-                    className="select-none"><IoReloadCircle /></button>
-            </div>
+            <Controls dispatchBoardAction={dispatchBoardAction} />
         </div>
+
     )
 }
 export default Tetris

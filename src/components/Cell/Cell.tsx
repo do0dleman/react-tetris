@@ -3,11 +3,12 @@ import "./cell.css"
 
 type CellProps = {
     ShapeType: ShapeType | "ghost"
+    className?: string
 }
 
-function Cell({ ShapeType }: CellProps) {
+function Cell({ ShapeType, className }: CellProps) {
     return (
-        <div className={`w-10 h-10 border-l border-t ${ShapeType}`} />
+        <div className={`w-[30px] md:w-10 aspect-square border ${ShapeType} ${className}`} />
     )
 }
 export default Cell

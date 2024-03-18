@@ -24,6 +24,13 @@ export default function clearFullLines(newState: BoardState) {
         newBoard[0] = emptyRow
     })
     newState.score += clearedRows.length * 100
+    if (clearFullLines.length === 4) newState.score += 100
+
     newState.linesCleared += clearedRows.length
+    newState.linesClearedBeforeLevel += clearedRows.length
+    if (newState.linesClearedBeforeLevel >= 10) {
+        newState.level++
+        newState.linesClearedBeforeLevel %= 10
+    }
     return newBoard
 }
