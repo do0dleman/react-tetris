@@ -61,11 +61,11 @@ function Tetris() {
         })
     }
 
-    function HandleStartButton(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    function HandleStartButton() {
         dispatchBoardAction("toggleIsStart");
         StartBtnRef.current!.blur();
     }
-    function HandleRestartButton(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    function HandleRestartButton() {
 
         dispatchBoardAction("restart");
         RestartBtnRef.current!.blur();

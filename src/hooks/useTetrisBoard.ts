@@ -28,7 +28,7 @@ export default function useTetrisBoard() {
         }
 
         switch (action) {
-            case "restart":
+            case "restart": {
                 const newShapeType = generateRandomShape()
                 return {
                     ...initialBoardState,
@@ -38,6 +38,7 @@ export default function useTetrisBoard() {
                     nextDroppingShapeType: generateRandomShape()
 
                 }
+            }
             case "drop":
                 setGhostShapeRow(newState)
                 if (hasShapeUnder(newState)) {
@@ -90,7 +91,7 @@ export default function useTetrisBoard() {
                     newState.droppingCol--
                 }
                 return newState
-            case "roateRight":
+            case "roateRight": {
                 newState.lastInputTime = new Date()
                 const prevShape = JSON.parse(JSON.stringify(newState.droppingShape))
                 rotate2dArrayRight(newState.droppingShape)
@@ -98,6 +99,7 @@ export default function useTetrisBoard() {
                     newState.droppingShape = prevShape
                 }
                 return newState
+            }
             default:
                 return newState
         }
