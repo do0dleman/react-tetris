@@ -13,4 +13,4 @@ export const SHAPES = {
     ]
 }
 
-export type ShapeType = keyof typeof SHAPES | undefined
+export type ShapeType = keyof typeof SHAPES | undefined 

@@ -10,7 +10,7 @@ export default function doesIntersectGridBorder(newState: BoardState) {
             const shapeX = j + newState.droppingCol
             const shapeY = i + newState.droppingRow
 
-            if (newState.board[shapeY][shapeX] !== undefined) {
+            if (newState.board[shapeY][shapeX] != undefined) {
                 return false
             }
 

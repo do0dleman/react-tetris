@@ -9,5 +9,4 @@ export default function setShapeOnBoard(newState: BoardState) {
         const shapeX = j + newState.droppingCol
         newState.board[shapeY][shapeX] = newState.droppingShapeType
     }))
-    // return newState
 }

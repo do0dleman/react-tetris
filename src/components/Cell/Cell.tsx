@@ -2,7 +2,7 @@ import { ShapeType } from "../../models/shapes"
 import "./cell.css"
 
 type CellProps = {
-    ShapeType: ShapeType
+    ShapeType: ShapeType | "ghost"
 }
 
 function Cell({ ShapeType }: CellProps) {

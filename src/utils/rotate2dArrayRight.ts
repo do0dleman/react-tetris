@@ -1,7 +1,5 @@
 export default function rotate2dArrayRight(a: any[][]) {
     const N = a.length
-    console.log(N)
-
     for (let i = 0; i < Math.floor(N / 2); i++) {
         for (let j = i; j < N - i - 1; j++) {
 

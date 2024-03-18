@@ -8,10 +8,8 @@ export default function hasShapeUnder(newState: BoardState) {
 
     shape.every((row, i) => {
         if (hasUnder) return false
-        // console.log(row)
+
         row.every((cell, j) => {
-            // console.log(row, cell)
-            // console.log(i, j)
             if (hasUnder) return false
             if (!cell) return true
 
@@ -23,8 +21,7 @@ export default function hasShapeUnder(newState: BoardState) {
                 return false
             }
 
-            // console.log(newState.board)
-            if (newState.board[shapeY + 1][shapeX] !== undefined) {
+            if (newState.board[shapeY + 1][shapeX] != undefined) {
                 hasUnder = true
                 return false
             }
@@ -32,6 +29,5 @@ export default function hasShapeUnder(newState: BoardState) {
         })
         return true
     })
-    // console.log(hasUnder)
     return hasUnder
 }
