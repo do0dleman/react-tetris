@@ -73,7 +73,7 @@ function Tetris() {
     }
 
     return (
-        <div className="mt-10">
+        <div className="mt-8">
             <div className="flex justify-center gap-2 md:gap-8">
                 <div>
                     <div className="grid grid-cols-10 border border-slate-400 w-fit h-auto relative">
