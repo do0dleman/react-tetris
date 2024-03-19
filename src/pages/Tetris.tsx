@@ -1,4 +1,4 @@
-import Cell from "./Cell/Cell"
+import Cell from "../components/Cell/Cell"
 import useTetris from "../hooks/useTetris"
 import BoardState from "../models/BoardState"
 import { HIDDEN_ROW_COUNT } from "../utils/constants"
@@ -8,11 +8,11 @@ import { FaArrowRotateLeft } from "react-icons/fa6";
 import { ShapeType } from "../models/shapes"
 import setGhostShapeRow from "../utils/setGhostShapeRow"
 import { createRef } from "react"
-import NextPiece from "./NextPiece"
-import Score from "./Score"
-import Level from "./Level"
-import LinesCleared from "./LinesCleared"
-import Controls from "./Controls"
+import NextPiece from "../components/NextPiece"
+import Score from "../components/Score"
+import Level from "../components/Level"
+import LinesCleared from "../components/LinesCleared"
+import Controls from "../components/Controls"
 
 function Tetris() {
     const [boardState, dispatchBoardAction] = useTetris()
@@ -73,7 +73,7 @@ function Tetris() {
     }
 
     return (
-        <div className="flex flex-col justify-center mt-10">
+        <div className="mt-10">
             <div className="flex justify-center gap-2 md:gap-8">
                 <div>
                     <div className="grid grid-cols-10 border border-slate-400 w-fit h-auto relative">
@@ -93,14 +93,18 @@ function Tetris() {
                     <LinesCleared linesCleared={boardState.linesCleared} />
                     <Score score={boardState.score} />
                     <NextPiece shapeType={boardState.nextDroppingShapeType} />
-                    <div className="flex flex-col gap-2 md:flex-row justify-center items-center text-5xl">
-                        <button ref={StartBtnRef} onClick={HandleStartButton}
-                            className="select-none">
-                            {!boardState.isStarted ? <FaPlay /> :
-                                <FaPause />}
-                        </button>
-                        <button ref={RestartBtnRef} onClick={HandleRestartButton}
-                            className="select-none select:outline"><FaArrowRotateLeft /></button>
+                    <div className="text-5xl">
+                        <div className="flex flex-col gap-4 md:flex-row justify-center items-center">
+                            <button ref={StartBtnRef} onClick={HandleStartButton}
+                                className="select-none">
+                                {!boardState.isStarted ? <FaPlay /> :
+                                    <FaPause />}
+                            </button>
+                            <button ref={RestartBtnRef} onClick={HandleRestartButton}
+                                className="select-none select:outline">
+                                <FaArrowRotateLeft />
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
