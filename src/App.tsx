@@ -2,7 +2,6 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import Tetris from "./pages/Tetris"
 import Main from "./pages/Main"
 import About from "./pages/About"
-import JPTC from "./components/JPTC"
 
 function App() {
   const router = createBrowserRouter([
