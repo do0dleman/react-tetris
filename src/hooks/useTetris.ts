@@ -11,7 +11,25 @@ export default function useTetris() {
     const [boardState, dispatchBoard] = useTetrisBoard()
 
     useEffect(() => {
+        const tickTime = boardState.isSpeedUp ? 50 :
+            Math.max(INITIAL_TICK_TIME - boardState.level * 10, 50)
+
+        const gameLoopId = setTimeout(() => {
+            if (boardState.isGameOver) {
+                clearInterval(gameLoopId)
+                return
+            }
+            dispatchBoard("drop")
+        }, tickTime)
+
         const HadnleKeyDown = (e: KeyboardEvent) => {
+            const tickTime = boardState.isSpeedUp ? 50 :
+                Math.max(INITIAL_TICK_TIME - boardState.level * 10, 50)
+            if (new Date().getTime() - boardState.lastDropTime.getTime() >= tickTime) {
+                console.log(new Date().getTime() - boardState.lastDropTime.getTime())
+                dispatchBoard("drop")
+                clearTimeout(gameLoopId)
+            }
             if (e.key === "ArrowDown" && new Date().getTime() - window.lastKeyDownTime.getTime() < 100) {
                 return
             }
@@ -40,16 +58,6 @@ export default function useTetris() {
         window.lastKeyDownTime = new Date()
         window.addEventListener("keydown", HadnleKeyDown)
         window.addEventListener("keyup", HadnleKeyUp)
-        const tickTime = boardState.isSpeedUp ? 50 :
-            Math.max(INITIAL_TICK_TIME - boardState.level * 10, 50)
-
-        const gameLoopId = setTimeout(() => {
-            if (boardState.isGameOver) {
-                clearInterval(gameLoopId)
-                return
-            }
-            dispatchBoard("drop")
-        }, tickTime)
 
         return () => {
             clearTimeout(gameLoopId)

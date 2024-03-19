@@ -9,11 +9,11 @@ function NextPiece({ shapeType }: { shapeType: ShapeType }) {
         <div className="text-sm md:text-xl">
             <span>Next Piece:</span>
             <div className="w-20 md:w-28 aspect-square border p-2">
-                {shape.map(row => <div className="flex">
-                    {row.map(cell => {
+                {shape.map((row, i) => <div className="flex">
+                    {row.map((cell, j) => {
                         let cellType = undefined
                         if (cell) cellType = shapeType
-                        return <Cell key={"cell"} ShapeType={cellType} className="border-none w-fit flex-1 
+                        return <Cell key={`next${i}${j}`} ShapeType={cellType} className="border-none w-fit flex-1 
                         h-fit aspect-square" />
                     }
                     )}

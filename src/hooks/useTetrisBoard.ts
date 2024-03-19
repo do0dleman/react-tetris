@@ -56,6 +56,7 @@ export default function useTetrisBoard() {
                         newState.droppingRow = 2
                     }
                 }
+                newState.lastDropTime = new Date()
                 newState.droppingRow++
                 return newState
             case "placeInstantly":

@@ -20,6 +20,7 @@ type BoardState = {
     linesClearedBeforeLevel: number
     level: number
     lastInputTime: Date
+    lastDropTime: Date
 }
 
 const initialBoardState = ({
@@ -38,6 +39,7 @@ const initialBoardState = ({
     linesClearedBeforeLevel: 0,
     level: 5,
     lastInputTime: new Date(),
+    lastDropTime: new Date()
 }) as BoardState
 
 export { initialBoardState }
