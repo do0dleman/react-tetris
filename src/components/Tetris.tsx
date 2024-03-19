@@ -3,6 +3,7 @@ import useTetris from "../hooks/useTetris"
 import BoardState from "../models/BoardState"
 import { HIDDEN_ROW_COUNT } from "../utils/constants"
 import { FaPlay } from "react-icons/fa6"
+import { FaPause } from "react-icons/fa6";
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import { ShapeType } from "../models/shapes"
 import setGhostShapeRow from "../utils/setGhostShapeRow"
@@ -75,8 +76,16 @@ function Tetris() {
         <div className="flex flex-col justify-center mt-10">
             <div className="flex justify-center gap-2 md:gap-8">
                 <div>
-                    <div className="grid grid-cols-10 border w-fit h-auto">
+                    <div className="grid grid-cols-10 border w-fit h-auto relative">
                         {drawGrid(boardState)}
+                        {boardState.isGameOver ? <div className="absolute w-full h-full flex justify-center 
+                        items-center bg-black bg-opacity-50 text-4xl">
+                            Game Over
+                        </div> : <></>}
+                        {!boardState.isStarted ? <div className="absolute w-full h-full flex justify-center 
+                        items-center bg-black bg-opacity-50 text-4xl">
+                            Paused
+                        </div> : <></>}
                     </div>
                 </div>
                 <div className="w-fit flex flex-col gap-3 h-[fit-content]">
@@ -86,7 +95,10 @@ function Tetris() {
                     <NextPiece shapeType={boardState.nextDroppingShapeType} />
                     <div className="flex flex-col gap-2 md:flex-row justify-center items-center text-5xl">
                         <button ref={StartBtnRef} onClick={HandleStartButton}
-                            className="select-none"><FaPlay /></button>
+                            className="select-none">
+                            {!boardState.isStarted ? <FaPlay /> :
+                                <FaPause />}
+                        </button>
                         <button ref={RestartBtnRef} onClick={HandleRestartButton}
                             className="select-none select:outline"><FaArrowRotateLeft /></button>
                     </div>
