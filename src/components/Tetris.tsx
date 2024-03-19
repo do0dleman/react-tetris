@@ -76,7 +76,7 @@ function Tetris() {
         <div className="flex flex-col justify-center mt-10">
             <div className="flex justify-center gap-2 md:gap-8">
                 <div>
-                    <div className="grid grid-cols-10 border w-fit h-auto relative">
+                    <div className="grid grid-cols-10 border border-slate-400 w-fit h-auto relative">
                         {drawGrid(boardState)}
                         {boardState.isGameOver ? <div className="absolute w-full h-full flex justify-center 
                         items-center bg-black bg-opacity-50 text-4xl">
