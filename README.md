@@ -1,6 +1,6 @@
 # React Tetris
 
-This game was developed for JPTC game jam by Ņikita Obrazcovs. It is available as a separate website here: [here](https://do0dle-tetris.vercel.app/)
+This game was developed for [JPTC game jam](https://itch.io/jam/jptc-izaicinajums-spelu-izstrade) by Ņikita Obrazcovs. It is available as a separate website here: [here](https://do0dle-tetris.vercel.app/)
 
 ## Controls:
 
