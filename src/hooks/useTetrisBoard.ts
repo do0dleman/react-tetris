@@ -16,6 +16,7 @@ import placeSound from "../sounds/place.mp3"
 import rotateSound from "../sounds/rotate.m4a"
 import korobeinikiMusic from "../sounds/korobeiniki.mp3"
 import clearLineSound from "../sounds/clearLine.mp3"
+import failSound from "../sounds/fail.mp3"
 
 export default function useTetrisBoard() {
     const move = new Audio(moveSound)
@@ -24,6 +25,8 @@ export default function useTetrisBoard() {
     place.volume = 0.1
     const rotate = new Audio(rotateSound)
     rotate.volume = 0.1
+    const fail = new Audio(failSound)
+    fail.volume = 0.1
     const clearLine = new Audio(clearLineSound)
     clearLine.volume = 0.5
     const bgMusic = useMemo(() => {
@@ -87,6 +90,10 @@ export default function useTetrisBoard() {
                         newState.droppingCol = 3
                         newState.droppingRow = 2
                     }
+                }
+                if (newState.isGameOver) {
+                    bgMusic.pause()
+                    fail.play()
                 }
                 newState.lastDropTime = new Date()
                 newState.droppingRow++
