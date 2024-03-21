@@ -25,7 +25,7 @@ export default function useTetrisBoard() {
     rotate.volume = 0.1
     const bgMusic = useMemo(() => {
         const audio = new Audio(korobeinikiMusic)
-        audio.volume = 0.7
+        audio.volume = 0.3
         audio.loop = true
         return audio
     }, [])
@@ -37,6 +37,7 @@ export default function useTetrisBoard() {
         }
         if (action === "toggleIsStart") {
             newState.isStarted = !newState.isStarted
+            if (!newState.isStarted) bgMusic.pause()
             return newState
         }
         if (!newState.isStarted && action !== "restart"
@@ -54,6 +55,7 @@ export default function useTetrisBoard() {
                 }
                 return newState
             case "restart": {
+                bgMusic.currentTime = 0
                 const newShapeType = generateRandomShape()
                 return {
                     ...initialBoardState,
