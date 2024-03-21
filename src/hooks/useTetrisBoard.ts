@@ -89,6 +89,7 @@ export default function useTetrisBoard() {
                 newState.droppingRow++
                 return newState
             case "placeInstantly":
+                newState.score += newState.droppingRow
                 newState.droppingRow = state.ghostPieceRow
                 setShapeOnBoard(newState)
                 if (state.isSFXon) place.play()
