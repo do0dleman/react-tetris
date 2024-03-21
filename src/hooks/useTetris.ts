@@ -26,7 +26,6 @@ export default function useTetris() {
             const tickTime = boardState.isSpeedUp ? 50 :
                 Math.max(INITIAL_TICK_TIME - boardState.level * 10, 50)
             if (new Date().getTime() - boardState.lastDropTime.getTime() >= tickTime) {
-                console.log(new Date().getTime() - boardState.lastDropTime.getTime())
                 dispatchBoard("drop")
                 clearTimeout(gameLoopId)
             }
@@ -64,7 +63,7 @@ export default function useTetris() {
             window.removeEventListener('keydown', HadnleKeyDown)
             window.removeEventListener("keyup", HadnleKeyUp)
         }
-    }, [boardState])
+    }, [boardState, dispatchBoard])
 
     return [boardState, dispatchBoard] as [BoardState, React.Dispatch<BoardActions>]
 }

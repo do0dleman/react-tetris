@@ -1,5 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
-import Tetris from "./pages/Tetris"
+import Tetris from "./pages/tetris/Tetris"
 import Main from "./pages/Main"
 import About from "./pages/About"
 

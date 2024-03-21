@@ -2,7 +2,7 @@ import { SHAPES, ShapeType } from "./shapes"
 
 export type BoardActions = "drop" | "moveLeft" | "moveRight" |
     "roateRight" | "speedUpOn" | "speedUpOff" | "toggleIsStart" |
-    "restart" | "placeInstantly"
+    "restart" | "placeInstantly" | "toggleSFX"
 
 type BoardState = {
     board: ShapeType[][],
@@ -21,6 +21,7 @@ type BoardState = {
     level: number
     lastInputTime: Date
     lastDropTime: Date
+    isSFXon: boolean
 }
 
 const initialBoardState = ({
@@ -39,7 +40,8 @@ const initialBoardState = ({
     linesClearedBeforeLevel: 0,
     level: 5,
     lastInputTime: new Date(),
-    lastDropTime: new Date()
+    lastDropTime: new Date(),
+    isSFXon: true
 }) as BoardState
 
 export { initialBoardState }

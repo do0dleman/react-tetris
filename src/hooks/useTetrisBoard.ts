@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useMemo, useReducer } from "react"
 import { SHAPES } from "../models/shapes"
 import generateGrid from "../utils/generateGrid"
 import BoardState, { BoardActions, initialBoardState } from "../models/BoardState"
@@ -11,8 +11,24 @@ import isGameOver from "../utils/isGameOver"
 import clearFullLines from "../utils/clearFullLines"
 import { PLACE_TIME_AFTER_INPUT } from "../utils/constants"
 import setGhostShapeRow from "../utils/setGhostShapeRow"
+import moveSound from "../sounds/move.mp3"
+import placeSound from "../sounds/place.mp3"
+import rotateSound from "../sounds/rotate.m4a"
+import korobeinikiMusic from "../sounds/korobeiniki.mp3"
 
 export default function useTetrisBoard() {
+    const move = new Audio(moveSound)
+    move.volume = 0.1
+    const place = new Audio(placeSound)
+    place.volume = 0.1
+    const rotate = new Audio(rotateSound)
+    rotate.volume = 0.1
+    const bgMusic = useMemo(() => {
+        const audio = new Audio(korobeinikiMusic)
+        audio.volume = 0.7
+        audio.loop = true
+        return audio
+    }, [])
 
     function boardReducer(state: BoardState, action: BoardActions) {
         const newState = { ...state }
@@ -23,11 +39,17 @@ export default function useTetrisBoard() {
             newState.isStarted = !newState.isStarted
             return newState
         }
-        if (!newState.isStarted) {
+        if (!newState.isStarted && action !== "restart"
+            && action !== "toggleSFX") {
             return newState
         }
 
         switch (action) {
+            case "toggleSFX":
+                newState.isSFXon = !state.isSFXon
+                if (newState.isSFXon) bgMusic.play()
+                if (!newState.isSFXon) bgMusic.pause()
+                return newState
             case "restart": {
                 const newShapeType = generateRandomShape()
                 return {
@@ -36,7 +58,6 @@ export default function useTetrisBoard() {
                     droppingShapeType: newShapeType,
                     droppingShape: JSON.parse(JSON.stringify(SHAPES[newShapeType!])),
                     nextDroppingShapeType: generateRandomShape()
-
                 }
             }
             case "drop":
@@ -46,6 +67,7 @@ export default function useTetrisBoard() {
                         return newState
                     }
                     setShapeOnBoard(newState)
+                    if (state.isSFXon) place.play()
                     newState.isGameOver = isGameOver(newState)
                     newState.board = clearFullLines(newState)
                     if (!newState.isGameOver) {
@@ -62,6 +84,7 @@ export default function useTetrisBoard() {
             case "placeInstantly":
                 newState.droppingRow = state.ghostPieceRow
                 setShapeOnBoard(newState)
+                if (state.isSFXon) place.play()
                 newState.isGameOver = isGameOver(newState)
                 newState.board = clearFullLines(newState)
                 if (!newState.isGameOver) {
@@ -84,6 +107,7 @@ export default function useTetrisBoard() {
                 if (doesIntersectGridBorder(newState)) {
                     newState.droppingCol++
                 }
+                if (state.isSFXon) move.play()
                 return newState
             case "moveRight":
                 newState.lastInputTime = new Date()
@@ -91,6 +115,7 @@ export default function useTetrisBoard() {
                 if (doesIntersectGridBorder(newState)) {
                     newState.droppingCol--
                 }
+                if (state.isSFXon) move.play()
                 return newState
             case "roateRight": {
                 newState.lastInputTime = new Date()
@@ -98,7 +123,9 @@ export default function useTetrisBoard() {
                 rotate2dArrayRight(newState.droppingShape)
                 if (doesIntersectGridBorder(newState)) {
                     newState.droppingShape = prevShape
+                    return newState
                 }
+                if (state.isSFXon) rotate.play()
                 return newState
             }
             default:
@@ -109,6 +136,7 @@ export default function useTetrisBoard() {
 
     function createInitialState() {
         const initialShapeType = generateRandomShape()
+        bgMusic.play()
         return {
             ...initialBoardState,
             droppingShapeType: initialShapeType,
