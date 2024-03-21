@@ -48,7 +48,10 @@ export default function useTetrisBoard() {
             case "toggleSFX":
                 newState.isSFXon = !state.isSFXon
                 if (newState.isSFXon) bgMusic.play()
-                if (!newState.isSFXon) bgMusic.pause()
+                if (!newState.isSFXon) {
+                    bgMusic.pause()
+                    bgMusic.currentTime = 0
+                }
                 return newState
             case "restart": {
                 const newShapeType = generateRandomShape()
@@ -61,6 +64,8 @@ export default function useTetrisBoard() {
                 }
             }
             case "drop":
+                if (state.isSFXon && bgMusic.paused) bgMusic.play()
+
                 setGhostShapeRow(newState)
                 if (hasShapeUnder(newState)) {
                     if (new Date().getTime() - newState.lastInputTime.getTime() < PLACE_TIME_AFTER_INPUT) {
@@ -136,7 +141,6 @@ export default function useTetrisBoard() {
 
     function createInitialState() {
         const initialShapeType = generateRandomShape()
-        bgMusic.play()
         return {
             ...initialBoardState,
             droppingShapeType: initialShapeType,
