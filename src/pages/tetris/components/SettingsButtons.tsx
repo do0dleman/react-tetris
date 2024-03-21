@@ -1,7 +1,7 @@
 import { FaArrowRotateLeft, FaPause, FaPlay } from "react-icons/fa6"
 import BoardState, { BoardActions } from "../../../models/BoardState"
 import { VscMute, VscUnmute } from "react-icons/vsc"
-import { createRef } from "react"
+import { createRef, useEffect } from "react"
 
 type SettingsButtonsProps = {
     dispatchBoardAction: React.Dispatch<BoardActions>
@@ -12,6 +12,22 @@ function SettingsButtons({ dispatchBoardAction, boardState }: SettingsButtonsPro
     const StartBtnRef = createRef<HTMLButtonElement>()
     const RestartBtnRef = createRef<HTMLButtonElement>()
     const SoundBtnRef = createRef<HTMLButtonElement>()
+
+    useEffect(() => {
+        const HandleKeyDown = (e: KeyboardEvent) => {
+            if (e.key.toLowerCase() === "p") {
+                HandleStartButton()
+            }
+            if (e.key.toLowerCase() === "r") {
+                HandleRestartButton()
+            }
+            if (e.key.toLowerCase() === "m") {
+                HandleSoundButton()
+            }
+        }
+        window.addEventListener("keydown", HandleKeyDown)
+        return () => window.removeEventListener("keydown", HandleKeyDown)
+    }, [])
 
     function HandleStartButton() {
         dispatchBoardAction("toggleIsStart");

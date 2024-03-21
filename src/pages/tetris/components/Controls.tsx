@@ -10,30 +10,35 @@ function Controls({ dispatchBoardAction }: { dispatchBoardAction: React.Dispatch
     const roateBtnRef = createRef<HTMLButtonElement>()
     const downBtnRef = createRef<HTMLButtonElement>()
 
+    const HandleLeftBtnClick = () => {
+        dispatchBoardAction("moveLeft")
+        leftBtnRef.current!.blur()
+    }
+    const HandleRightBtnClick = () => {
+        dispatchBoardAction("moveRight")
+        rightBtnRef.current!.blur()
+    }
+    const HandleRotateBtnClick = () => {
+        dispatchBoardAction("roateRight")
+        roateBtnRef.current!.blur()
+    }
+    const HandlePlaceBtnClick = () => {
+        dispatchBoardAction("placeInstantly")
+        downBtnRef.current!.blur()
+    }
+
     return (
         <div className="flex text-7xl md:text-8xl gap-4 mt-4 justify-center">
-            <button ref={leftBtnRef} onClick={() => {
-                dispatchBoardAction("moveLeft")
-                leftBtnRef.current!.blur()
-            }}>
+            <button ref={leftBtnRef} onClick={HandleLeftBtnClick}>
                 <FaArrowLeft />
             </button>
-            <button onClick={() => {
-                dispatchBoardAction("moveRight")
-                rightBtnRef.current!.blur()
-            }}>
+            <button onClick={HandleRightBtnClick}>
                 <FaArrowRight />
             </button>
-            <button onClick={() => {
-                dispatchBoardAction("roateRight")
-                roateBtnRef.current!.blur()
-            }}>
+            <button onClick={HandleRotateBtnClick}>
                 <IoReloadCircle />
             </button>
-            <button onClick={() => {
-                dispatchBoardAction("placeInstantly")
-                downBtnRef.current!.blur()
-            }}>
+            <button onClick={HandlePlaceBtnClick}>
                 <FaArrowDown />
             </button>
         </div >
