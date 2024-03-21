@@ -1,7 +1,7 @@
 import BoardState from "../models/BoardState";
 import { COL_COUNT } from "./constants";
 
-export default function clearFullLines(newState: BoardState) {
+export default function clearFullLines(newState: BoardState, clearLine: HTMLAudioElement) {
     const clearedRows: number[] = []
     const newBoard = JSON.parse(JSON.stringify(newState.board))
 
@@ -23,6 +23,8 @@ export default function clearFullLines(newState: BoardState) {
         }
         newBoard[0] = emptyRow
     })
+    if (clearedRows.length > 0) clearLine.play()
+
     newState.score += clearedRows.length * 100
     if (clearedRows.length === 4) newState.score += 100
 

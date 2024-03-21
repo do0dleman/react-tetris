@@ -15,6 +15,7 @@ import moveSound from "../sounds/move.mp3"
 import placeSound from "../sounds/place.mp3"
 import rotateSound from "../sounds/rotate.m4a"
 import korobeinikiMusic from "../sounds/korobeiniki.mp3"
+import clearLineSound from "../sounds/clearLine.mp3"
 
 export default function useTetrisBoard() {
     const move = new Audio(moveSound)
@@ -23,6 +24,8 @@ export default function useTetrisBoard() {
     place.volume = 0.1
     const rotate = new Audio(rotateSound)
     rotate.volume = 0.1
+    const clearLine = new Audio(clearLineSound)
+    clearLine.volume = 0.5
     const bgMusic = useMemo(() => {
         const audio = new Audio(korobeinikiMusic)
         audio.volume = 0.3
@@ -76,7 +79,7 @@ export default function useTetrisBoard() {
                     setShapeOnBoard(newState)
                     if (state.isSFXon) place.play()
                     newState.isGameOver = isGameOver(newState)
-                    newState.board = clearFullLines(newState)
+                    newState.board = clearFullLines(newState, clearLine)
                     if (!newState.isGameOver) {
                         newState.droppingShapeType = state.nextDroppingShapeType
                         newState.nextDroppingShapeType = generateRandomShape()
@@ -94,7 +97,7 @@ export default function useTetrisBoard() {
                 setShapeOnBoard(newState)
                 if (state.isSFXon) place.play()
                 newState.isGameOver = isGameOver(newState)
-                newState.board = clearFullLines(newState)
+                newState.board = clearFullLines(newState, clearLine)
                 if (!newState.isGameOver) {
                     newState.droppingShapeType = state.nextDroppingShapeType
                     newState.nextDroppingShapeType = generateRandomShape()
