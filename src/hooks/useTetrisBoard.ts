@@ -65,6 +65,7 @@ export default function useTetrisBoard() {
                 const newShapeType = generateRandomShape()
                 return {
                     ...initialBoardState,
+                    isSFXon: newState.isSFXon,
                     board: generateGrid(),
                     droppingShapeType: newShapeType,
                     droppingShape: JSON.parse(JSON.stringify(SHAPES[newShapeType!])),
@@ -91,7 +92,7 @@ export default function useTetrisBoard() {
                         newState.droppingRow = 2
                     }
                 }
-                if (newState.isGameOver) {
+                if (newState.isGameOver && newState.isSFXon) {
                     bgMusic.pause()
                     fail.play()
                 }
