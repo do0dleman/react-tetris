@@ -23,7 +23,7 @@ export default function clearFullLines(newState: BoardState, clearLine: HTMLAudi
         }
         newBoard[0] = emptyRow
     })
-    if (clearedRows.length > 0) clearLine.play()
+    if (clearedRows.length > 0 && newState.isSFXon) clearLine.play()
 
     newState.score += clearedRows.length * 100
     if (clearedRows.length === 4) newState.score += 100
